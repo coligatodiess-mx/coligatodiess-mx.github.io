@@ -1,1 +1,320 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Tequio de Saberes · Comunidad</title>
+<style>
+  :root{
+    --bg:#0f172a; --card:#0b1225; --ink:#e5e7eb; --muted:#9ca3af;
+    --brand:#22d3ee; --accent:#a78bfa; --ok:#34d399; --warn:#f59e0b;
+    --shadow:0 10px 30px rgba(0,0,0,.35);
+    --radius:18px;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:Inter,system-ui,Arial,Segoe UI,Roboto,sans-serif;color:var(--ink);background:radial-gradient(1200px 700px at 10% -20%,#10204a 0,#0b1026 45%,#080b19 100%),var(--bg)}
+  a{color:var(--brand);text-decoration:none}
+  header{position:sticky;top:0;z-index:10;background:linear-gradient(180deg,rgba(5,8,18,.85),rgba(5,8,18,.4));backdrop-filter:blur(10px);border-bottom:1px solid rgba(255,255,255,.06)}
+  .wrap{max-width:1100px;margin:auto;padding:18px}
+  .brand{display:flex;gap:14px;align-items:center}
+  .logo{width:38px;height:38px;border-radius:10px;background:
+    conic-gradient(from 210deg at 50% 50%, var(--brand), var(--accent), var(--brand));
+    box-shadow:0 0 0 3px rgba(255,255,255,.06)}
+  h1{font-size:1.25rem;margin:0}
+  .sub{color:var(--muted);font-size:.9rem}
+  nav.tabs{margin-top:14px;display:flex;gap:10px;flex-wrap:wrap}
+  .tab{padding:10px 14px;border-radius:12px;background:#0b1225;border:1px solid rgba(255,255,255,.07);cursor:pointer}
+  .tab.active{background:linear-gradient(135deg, rgba(34,211,238,.20), rgba(167,139,250,.18));border-color:rgba(255,255,255,.25)}
+  main{padding:22px}
+  .grid{display:grid;grid-template-columns:1.1fr .9fr;gap:22px}
+  .card{background:var(--card);border:1px solid rgba(255,255,255,.07);border-radius:var(--radius);box-shadow:var(--shadow)}
+  .card .hd{padding:18px 18px 0}
+  .card .bd{padding:18px}
+  .muted{color:var(--muted)}
+  .kpis{display:flex;gap:16px;flex-wrap:wrap}
+  .kpi{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);padding:12px 14px;border-radius:14px}
+  .badge{font-size:.8rem;padding:4px 8px;border-radius:999px;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.04)}
+  /* forms */
+  input,textarea,select,button{
+    font:inherit;color:inherit;background:#0a1226;border:1px solid rgba(255,255,255,.12);
+    border-radius:12px;padding:12px 14px;outline:none
+  }
+  textarea{min-height:120px;resize:vertical}
+  button{cursor:pointer}
+  .row{display:flex;gap:10px;flex-wrap:wrap}
+  .pill{display:inline-flex;gap:8px;align-items:center}
+  .right{margin-left:auto}
+  .topic{padding:14px;border:1px solid rgba(255,255,255,.08);border-radius:16px;background:rgba(255,255,255,.02)}
+  .topic + .topic{margin-top:12px}
+  .topic h4{margin:0 0 6px}
+  .meta{font-size:.85rem;color:var(--muted);display:flex;gap:10px;flex-wrap:wrap}
+  .actions{display:flex;gap:10px;margin-top:10px;flex-wrap:wrap}
+  .actions button{background:rgba(255,255,255,.06)}
+  .comment{margin-top:10px;padding:10px;border-left:2px solid rgba(255,255,255,.15);background:rgba(255,255,255,.02);border-radius:10px}
+  .empty{padding:14px;border:1px dashed rgba(255,255,255,.15);border-radius:14px;color:var(--muted)}
+  .chat{height:260px;overflow:auto;border:1px solid rgba(255,255,255,.08);border-radius:14px;background:rgba(255,255,255,.02);padding:12px}
+  .msg{padding:8px 10px;margin:6px 0;border-radius:12px;background:rgba(34,211,238,.08)}
+  .float-note{font-size:.85rem;color:var(--muted)}
+  footer{padding:40px 18px;color:var(--muted);text-align:center}
+  @media (max-width: 980px){ .grid{grid-template-columns:1fr} }
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <div class="brand">
+      <div class="logo" aria-hidden="true"></div>
+      <div>
+        <h1>Tequio de Saberes · Comunidad Científica</h1>
+        <div class="sub">Economía Social y Solidaria — diálogo, co-creación y divulgación</div>
+      </div>
+      <div class="right pill">
+        <span id="whoami" class="badge">Invitado</span>
+        <button id="btnAuth">Identificarme</button>
+      </div>
+    </div>
+    <nav class="tabs">
+      <button class="tab active" data-tab="presentacion">Presentación</button>
+      <button class="tab" data-tab="dialectica">Dialéctica (Foro)</button>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <!-- PRESENTACIÓN -->
+  <section id="presentacion" class="tabpane">
+    <div class="grid">
+      <div class="card">
+        <div class="hd"><h2>Propósito</h2></div>
+        <div class="bd">
+          <p>
+            <b>Tequio de Saberes</b> es una comunidad abierta para aprender, investigar y construir
+            alternativas desde la <b>Economía Social y Solidaria (ESS)</b>. Nuestro enfoque:
+            cooperación, autogestión, ciencia abierta y respeto al territorio.
+          </p>
+          <div class="kpis">
+            <div class="kpi">📚 Repositorio de artículos, cápsulas y audios</div>
+            <div class="kpi">💬 Foro “Dialéctica”: temas y reflexiones</div>
+            <div class="kpi">🤝 Suscripción gratuita con identificador</div>
+            <div class="kpi">🛠️ Roadmap a backend (Firebase/Supabase)</div>
+          </div>
+          <p class="float-note">Esta demo guarda datos en tu navegador (LocalStorage). Ideal para probar estructura y flujo antes de pasar a un backend real.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="hd"><h3>Suscripción gratuita (identificador)</h3></div>
+        <div class="bd">
+          <form id="formSignup" class="row">
+            <input id="nick" placeholder="Tu identificador (ej. @coligato)" required />
+            <input id="mail" type="email" placeholder="Correo (opcional)" />
+            <button type="submit">Crear/actualizar perfil</button>
+          </form>
+          <p class="float-note">Con este identificador podrás publicar temas, reflexiones, comentar y chatear.</p>
+          <hr style="border-color:rgba(255,255,255,.08)">
+          <div class="row">
+            <button id="btnExport">Exportar datos (.json)</button>
+            <label class="badge" style="cursor:pointer">
+              Importar .json
+              <input id="fileImport" type="file" accept="application/json" style="display:none">
+            </label>
+            <button id="btnReset" class="right" title="Borrar todo lo local">Borrar demo local</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="hd"><h3>Mini-chat comunitario</h3></div>
+        <div class="bd">
+          <div id="chat" class="chat" aria-live="polite"></div>
+          <form id="formChat" class="row" style="margin-top:10px">
+            <input id="chatMsg" placeholder="Escribe un mensaje breve…" maxlength="240">
+            <button>Enviar</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DIALÉCTICA -->
+  <section id="dialectica" class="tabpane" style="display:none">
+    <div class="grid">
+      <div class="card">
+        <div class="hd"><h2>Publicar tema y reflexión</h2></div>
+        <div class="bd">
+          <form id="formTopic">
+            <div class="row">
+              <input id="tTitle" placeholder="Título del tema" required />
+              <input id="tTags" placeholder="Etiquetas (coma separadas) ej. ESS,Políticas" />
+            </div>
+            <textarea id="tBody" placeholder="Reflexión inicial, contexto, fuentes, preguntas guía…" required></textarea>
+            <div class="row">
+              <button>Publicar</button>
+              <span class="float-note">Tip: comparte DOI/URL y bibliografía en formato breve.</span>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="hd"><h2>Temas recientes</h2></div>
+        <div class="bd" id="topicsList">
+          <div class="empty">Aún no hay temas. ¡Publica el primero! 🌱</div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  © <span id="yr"></span> Tequio de Saberes · Hecho con cariño comunitario. · Demo sin servidor.
+</footer>
+
+<script>
+/* ------- utilidades ------- */
+const $ = s => document.querySelector(s);
+const el = (t,props={}) => Object.assign(document.createElement(t),props);
+const now = () => new Date().toISOString();
+const db = {
+  get key(){ return 'tequio_demo_v1'; },
+  load(){ try{ return JSON.parse(localStorage.getItem(this.key))||{user:null,topics:[],chat:[]}; }catch{ return {user:null,topics:[],chat:[]}; } },
+  save(data){ localStorage.setItem(this.key, JSON.stringify(data)); }
+};
+let state = db.load();
+
+/* ------- tabs ------- */
+document.querySelectorAll('.tab').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.tabpane').forEach(p=>p.style.display='none');
+    document.getElementById(btn.dataset.tab).style.display='';
+  });
+});
+
+/* ------- identidad ------- */
+function setUser(u){
+  state.user = u; db.save(state);
+  $('#whoami').textContent = u ? u.nick : 'Invitado';
+  $('#nick').value = u?.nick||'';
+  $('#mail').value = u?.mail||'';
+}
+$('#btnAuth').onclick = ()=> $('#nick').focus();
+$('#formSignup').addEventListener('submit', e=>{
+  e.preventDefault();
+  const nick = $('#nick').value.trim();
+  if(!nick){ alert('Escribe un identificador.'); return; }
+  setUser({nick, mail: $('#mail').value.trim()||null, since: state.user?.since||now()});
+});
+
+/* ------- chat ------- */
+function renderChat(){
+  const box = $('#chat'); box.innerHTML='';
+  state.chat.slice(-150).forEach(m=>{
+    const div = el('div',{className:'msg'});
+    div.innerHTML = `<b>${m.nick||'Invitado'}:</b> ${escapeHtml(m.text)} <span class="muted" style="float:right">${fmtTime(m.at)}</span>`;
+    box.appendChild(div);
+  });
+  box.scrollTop = box.scrollHeight;
+}
+$('#formChat').addEventListener('submit', e=>{
+  e.preventDefault();
+  const text = $('#chatMsg').value.trim();
+  if(!text) return;
+  state.chat.push({id:crypto.randomUUID(), nick:state.user?.nick||'Invitado', text, at: now()});
+  db.save(state); $('#chatMsg').value=''; renderChat();
+});
+
+/* ------- temas ------- */
+function renderTopics(){
+  const wrap = $('#topicsList'); wrap.innerHTML='';
+  if(state.topics.length===0){ wrap.appendChild(el('div',{className:'empty',textContent:'Aún no hay temas. ¡Publica el primero! 🌱'})); return; }
+  state.topics.slice().reverse().forEach(t=>{
+    const box = el('div',{className:'topic'});
+    const tags = t.tags?.length ? t.tags.map(x=>`<span class="badge">${escapeHtml(x)}</span>`).join(' ') : '';
+    box.innerHTML = `
+      <h4>${escapeHtml(t.title)}</h4>
+      <div class="meta">por <b>${escapeHtml(t.author||'Invitado')}</b> · ${fmtTime(t.at)} ${tags? '· '+tags:''}</div>
+      <p>${md(escapeHtml(t.body))}</p>
+      <div class="actions">
+        <button data-like="${t.id}">👍 ${t.likes||0}</button>
+        <button data-reply="${t.id}">Comentar</button>
+      </div>
+      <div class="comments">${(t.comments||[]).map(c=>(
+        `<div class="comment"><b>${escapeHtml(c.author||'Invitado')}</b> · <span class="muted">${fmtTime(c.at)}</span><br>${md(escapeHtml(c.text))}</div>`
+      )).join('')}</div>
+    `;
+    wrap.appendChild(box);
+  });
+
+  // acciones
+  wrap.querySelectorAll('[data-like]').forEach(b=>b.onclick = ()=>{
+    const id = b.getAttribute('data-like');
+    const t = state.topics.find(x=>x.id===id);
+    t.likes = (t.likes||0)+1; db.save(state); renderTopics();
+  });
+  wrap.querySelectorAll('[data-reply]').forEach(b=>b.onclick = ()=>{
+    const id = b.getAttribute('data-reply');
+    const text = prompt('Escribe tu comentario (Markdown simple permitido):');
+    if(!text) return;
+    const t = state.topics.find(x=>x.id===id);
+    t.comments = t.comments||[];
+    t.comments.push({id:crypto.randomUUID(), author: state.user?.nick||'Invitado', text, at: now()});
+    db.save(state); renderTopics();
+  });
+}
+
+$('#formTopic').addEventListener('submit', e=>{
+  e.preventDefault();
+  if(!state.user){ alert('Identifícate para publicar.'); return; }
+  const title = $('#tTitle').value.trim();
+  const body = $('#tBody').value.trim();
+  if(!title || !body){ alert('Faltan título/reflexión.'); return; }
+  const tags = $('#tTags').value.split(',').map(s=>s.trim()).filter(Boolean);
+  state.topics.push({id:crypto.randomUUID(), title, body, tags, author: state.user.nick, at: now(), likes:0, comments:[]});
+  db.save(state);
+  e.target.reset();
+  renderTopics();
+});
+
+/* ------- export / import / reset ------- */
+$('#btnExport').onclick = ()=>{
+  const blob = new Blob([JSON.stringify(state,null,2)],{type:'application/json'});
+  const a = el('a',{href:URL.createObjectURL(blob),download:'tequio-demo.json'}); a.click(); URL.revokeObjectURL(a.href);
+};
+$('#fileImport').onchange = async (e)=>{
+  const f = e.target.files[0]; if(!f) return;
+  const text = await f.text();
+  try{ const data = JSON.parse(text); state = data; db.save(state); hydrate(); }
+  catch{ alert('Archivo inválido'); }
+};
+$('#btnReset').onclick = ()=>{
+  if(confirm('Esto borrará los datos locales de la demo en ESTE navegador.')){ localStorage.removeItem(db.key); state = db.load(); hydrate(); }
+};
+
+/* ------- helpers ------- */
+function hydrate(){
+  setUser(state.user);
+  renderTopics();
+  renderChat();
+  $('#yr').textContent = new Date().getFullYear();
+}
+function fmtTime(iso){
+  try{ const d = new Date(iso); return d.toLocaleString(); }catch{ return iso; }
+}
+function escapeHtml(s){ return s.replace(/[&<>"']/g, m=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[m])); }
+// mini markdown (negritas, itálicas, enlaces simples, saltos de línea)
+function md(s){
+  return s
+    .replace(/\*\*(.+?)\*\*/g,'<b>$1</b>')
+    .replace(/\*(.+?)\*/g,'<i>$1</i>')
+    .replace(/\[(.+?)\]\((https?:\/\/[^\s)]+)\)/g,'<a href="$2" target="_blank" rel="noopener">$1</a>')
+    .replace(/\n/g,'<br>');
+}
+
+/* ------- boot ------- */
+hydrate();
+</script>
+</body>
+</html>
 
